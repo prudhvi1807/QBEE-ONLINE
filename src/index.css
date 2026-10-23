@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* QBee design tokens — palette taken from the client logo (navy, blue, honey).
+   Domain colours encode which series a course belongs to; use them only for that. */
+@theme {
+  --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Schibsted Grotesk", "Public Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-ink: #0a2350;
+  --color-ink-2: #13306b;
+  --color-blue: #1f5fd1;
+  --color-blue-soft: #e8f0fd;
+  --color-honey: #f5b301;
+  --color-honey-deep: #d99a00;
+  --color-honey-soft: #fff4d1;
+  --color-mist: #f3f6fb;
+  --color-line: #dde4ee;
+  --color-text: #142033;
+  --color-muted: #56657a;
+  --color-ok: #0f7a3d;
+  --color-ok-soft: #e5f5ec;
+  --color-warn: #a15c00;
+
+  --color-vlsi: #5b3fd6;
+  --color-vlsi-soft: #eeebfc;
+  --color-embedded: #0b7a75;
+  --color-embedded-soft: #e3f4f2;
+  --color-edge: #c2410c;
+  --color-edge-soft: #fdede5;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: #ffffff;
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  fieldset { min-width: 0; }
+  :focus-visible {
+    outline: 3px solid var(--color-blue);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection { background: var(--color-honey-soft); color: var(--color-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Role picker: the single orchestrated motion on the site */
+@keyframes path-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+.path-step { animation: path-in 320ms cubic-bezier(.2,.7,.2,1) both; }
+
+@keyframes chat-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+.chat-in { animation: chat-in 180ms ease-out both; }
+
+/* Code editor surface */
+.code-area {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 4;
+}
