@@ -301,7 +301,7 @@ export function StudentEnquiryForm() {
 
           <div>
             <label htmlFor="enquiry-course" className="block text-xs font-semibold uppercase tracking-wider text-ink">
-              Interested Course <span className="text-warn">*</span>
+              Interested Domain <span className="text-warn">*</span>
             </label>
             <select
               id="enquiry-course"
@@ -314,7 +314,7 @@ export function StudentEnquiryForm() {
               aria-invalid={Boolean(errors.course)}
               aria-describedby={errors.course ? 'course-error' : undefined}
             >
-              <option value="">Select course domain</option>
+              <option value="">Select interested domain</option>
               {COURSE_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}

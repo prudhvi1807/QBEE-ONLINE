@@ -13,6 +13,7 @@ const Kits = lazy(() => import('./pages/Kits'));
 const Internships = lazy(() => import('./pages/Internships'));
 const Placements = lazy(() => import('./pages/Placements'));
 const Institutions = lazy(() => import('./pages/Institutions'));
+const Companies = lazy(() => import('./pages/Companies'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Policies = lazy(() => import('./pages/Policies'));
@@ -30,10 +31,18 @@ const Booking = lazy(() => import('./pages/portal/Booking'));
 const Certificates = lazy(() => import('./pages/portal/Certificates'));
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (hash) {
+      const id = hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50);
+        return;
+      }
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 
@@ -79,6 +88,7 @@ export default function App() {
             <Route path="internships" element={<Internships />} />
             <Route path="placements" element={<Placements />} />
             <Route path="institutions" element={<Institutions />} />
+            <Route path="companies" element={<Companies />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="policies" element={<Policies />} />

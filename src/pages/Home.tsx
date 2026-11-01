@@ -1,248 +1,315 @@
 import { Link } from 'react-router-dom';
-import { CalendarClock, Cpu, FlaskConical, GraduationCap, Hammer, Presentation } from 'lucide-react';
+import {
+  ArrowRight,
+  FlaskConical,
+  GraduationCap,
+  Hammer,
+  Presentation,
+  Quote,
+} from 'lucide-react';
 import { RolePicker } from '../components/RolePicker';
-import { ButtonLink, Container, Section, SectionHead, cx, domainBg, domainText } from '../components/ui';
-import { AUDIENCES, BATCH_FORMATS, COURSES, DOMAINS, KITS, OUTCOMES_NOTE, PROGRAMMES, SERVICES, type Domain } from '../data/catalog';
-import { inr } from '../lib/pricing';
+import { ButtonLink, Container, Section, SectionHead } from '../components/ui';
 import { Faq } from '../components/Faq';
 
 const INCLUDED = [
-  { icon: Presentation, title: 'Instructor-led sessions', body: 'Live classes in weekday-evening, weekend or self-paced + mentoring batches.' },
-  { icon: FlaskConical, title: 'Hands-on labs', body: 'Weekly labs with lab access and mentor support for the full course.' },
-  { icon: Hammer, title: 'A graded capstone', body: 'Every course ends in a project you can show and explain in an interview.' },
-  { icon: GraduationCap, title: 'QBeeMind certificate', body: 'Awarded on completing the course and its project. Tracks add a consolidated certificate.' },
+  {
+    icon: Presentation,
+    title: 'Instructor-Led Sessions',
+    body: 'Live interactive classes in weekday-evening and weekend batches led by senior industry engineers.',
+  },
+  {
+    icon: FlaskConical,
+    title: 'Hands-On Hardware Labs',
+    body: 'Weekly labs using real development boards, logic analyzers, and industry-standard EDA tools.',
+  },
+  {
+    icon: Hammer,
+    title: 'Graded Capstone Projects',
+    body: 'Every program culminates in a complete, verified project deliverable you can explain in an interview.',
+  },
+  {
+    icon: GraduationCap,
+    title: 'QBeeMind Certification',
+    body: 'Awarded upon course completion and capstone evaluation, recognized across partnering institutions.',
+  },
 ];
 
 const STEPS = [
-  { title: 'Enrol and pick a batch', body: 'Choose a course, track or bundle, and the batch format that fits your week. Pay in full or 60/40.' },
-  { title: 'Learn live, build every week', body: 'Instructor-led sessions with a hands-on lab each week, on the tools teams actually use.' },
-  { title: 'Ship the capstone', body: 'Design, debug and document a real deliverable — reviewed and graded by a mentor.' },
-  { title: 'Get certified and interview-ready', body: 'Certificate, a portfolio project, resume help, mock interviews and domain interview prep.' },
+  {
+    title: 'Select Domain & Format',
+    body: 'Choose your focus in VLSI, Embedded, or Edge AI with batch schedules that fit around college or work.',
+  },
+  {
+    title: 'Learn Live & Build Weekly',
+    body: 'Attend live classes and implement hands-on labs each week on the tools engineering teams actually use.',
+  },
+  {
+    title: 'Ship the Capstone Project',
+    body: 'Design, simulate, debug, and document a real hardware or AI system — evaluated by experienced mentors.',
+  },
+  {
+    title: 'Interview & Placement Prep',
+    body: 'Receive portfolio guidance, resume refinement, mock interview drills, and targeted hiring opportunities.',
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    quote:
+      'The SystemVerilog and UVM verification training gave me the exact technical edge I needed. In my interviews, I could walk through my testbench architecture, constrained-random sequences, and functional coverage models with complete confidence.',
+    name: 'Rohan V.',
+    role: 'Design Verification Trainee',
+    domain: 'VLSI Design',
+  },
+  {
+    quote:
+      'Writing bare-metal drivers on an STM32 board and debugging CAN bus traffic with a logic analyzer completely transformed my understanding. QBee’s focus on real hardware rather than just theoretical slides made all the difference.',
+    name: 'Ananya K.',
+    role: 'Embedded Firmware Engineer',
+    domain: 'Embedded Systems',
+  },
+  {
+    quote:
+      'Optimizing deep learning models with TinyML and deploying them directly onto an MCU was incredible. The practical capstone project became the centerpiece of my resume that interviewers focused on.',
+    name: 'Siddharth M.',
+    role: 'Edge AI & Systems Engineer',
+    domain: 'Edge AI',
+  },
 ];
 
 export default function Home() {
   return (
     <>
-      <section className="bg-ink py-12 sm:py-16 lg:py-20">
+      {/* 2. Simplified Hero Section with company introduction and student enquiry form */}
+      <section className="border-b border-white/10 bg-ink py-12 sm:py-16 lg:py-20">
         <Container>
           <RolePicker />
         </Container>
       </section>
 
-      <section className="border-b border-line bg-white">
-        <Container className="grid gap-6 py-10 sm:grid-cols-2 lg:grid-cols-4">
-          {INCLUDED.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="flex gap-3">
-              <Icon className="mt-0.5 h-6 w-6 shrink-0 text-blue" aria-hidden />
-              <div>
-                <h3 className="font-sans text-[16px] font-semibold text-ink">{title}</h3>
-                <p className="mt-1 text-[15px] text-muted">{body}</p>
-              </div>
-            </div>
-          ))}
-        </Container>
-      </section>
-
+      {/* 3. Three-Domain Overview (VLSI, Embedded Systems, Edge AI) */}
       <Section>
         <SectionHead
-          title="Three domains, eighteen courses"
-          intro="Take one course, a role-focused track, or a whole domain. Every course is ₹15,000 on its own."
-          action={<ButtonLink to="/courses" variant="outline">Browse all courses</ButtonLink>}
+          title="Explore Our Learning Domains"
+          intro="Structured, industry-aligned learning tracks designed to take you from foundational concepts to working silicon, firmware, and edge models."
+          action={
+            <ButtonLink to="/courses" variant="outline">
+              Browse All Courses
+            </ButtonLink>
+          }
         />
-        <div className="grid gap-5 lg:grid-cols-3">
-          {(Object.keys(DOMAINS) as Domain[]).map((d) => (
-            <div key={d} className="flex flex-col rounded-xl border border-line">
-              <div className={cx('rounded-t-xl px-6 py-5 text-white', domainBg[d])}>
-                <h3 className="text-[22px] font-bold text-white">{DOMAINS[d].name}</h3>
-                <p className="mt-1 text-sm text-white/85">{DOMAINS[d].series}, 6 courses</p>
+        <div className="grid gap-8 md:grid-cols-3">
+          {/* Card 1: VLSI Design */}
+          <div className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+            <div className="aspect-[16/10] w-full overflow-hidden bg-ink">
+              <img
+                src="/assets/courses/vlsi/vlsi-101.webp"
+                alt="VLSI Design - Digital Logic & Silicon Layout"
+                className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <div className="flex items-center gap-2">
+                <span className="rounded-md bg-blue/10 px-2.5 py-0.5 text-xs font-semibold text-blue">
+                  Semiconductor Track
+                </span>
               </div>
-              <div className="flex flex-1 flex-col px-6 py-5">
-                <p className="text-[15px] text-muted">{DOMAINS[d].blurb}</p>
-                <ul className="mt-5 divide-y divide-line border-y border-line">
-                  {COURSES.filter((c) => c.domain === d).map((c) => (
-                    <li key={c.code}>
-                      <Link to={`/courses/${c.slug}`} className="flex items-baseline gap-3 py-2.5 hover:bg-mist">
-                        <span className={cx('w-[74px] shrink-0 font-mono text-[12px] font-semibold', domainText[d])}>{c.code}</span>
-                        <span className="text-[15px] leading-snug text-text">{c.title}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link to={`/courses?domain=${d}`} className={cx('mt-5 text-[15px] font-semibold hover:underline', domainText[d])}>
-                  See {DOMAINS[d].name} courses and tracks
+              <h3 className="mt-3 font-display text-[22px] font-bold text-ink">
+                VLSI Design
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Learn digital design, RTL development, functional verification, ASIC physical design, and FPGA prototyping through practical engineering training.
+              </p>
+              <div className="mt-6 pt-4 border-t border-line">
+                <Link
+                  to="/courses?domain=vlsi"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-blue hover:text-blue/80 transition-colors"
+                >
+                  Explore VLSI Programs <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-      </Section>
+          </div>
 
-      <Section tone="mist">
-        <SectionHead title="The more you build, the less you pay" intro="Bundle prices apply when you enrol in one payment or an agreed instalment plan." action={<ButtonLink to="/programs" variant="outline">Compare all programs</ButtonLink>} />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {PROGRAMMES.map((p) => {
-            const featured = p.id === 'all-access';
-            return (
-              <div key={p.id} className={cx('flex flex-col rounded-xl p-6', featured ? 'bg-ink text-white' : 'border border-line bg-white')}>
-                <h3 className={cx('text-[19px] font-bold', featured && 'text-white')}>{p.name}</h3>
-                <p className={cx('mt-2 text-[15px]', featured ? 'text-white/75' : 'text-muted')}>{p.includes}</p>
-                <div className="mt-auto pt-6">
-                  {p.standard > p.price && <p className={cx('text-sm line-through', featured ? 'text-white/50' : 'text-muted')}>{inr(p.standard)}</p>}
-                  <p className={cx('font-display text-[30px] font-extrabold', featured ? 'text-honey' : 'text-ink')}>{inr(p.price)}</p>
-                  {p.standard > p.price && <p className={cx('text-sm font-medium', featured ? 'text-white/80' : 'text-ok')}>Save {inr(p.standard - p.price)}</p>}
-                </div>
+          {/* Card 2: Embedded Systems */}
+          <div className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+            <div className="aspect-[16/10] w-full overflow-hidden bg-ink">
+              <img
+                src="/assets/courses/embedded/emb-101.webp"
+                alt="Embedded Systems - ARM Microcontroller & Firmware"
+                className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <div className="flex items-center gap-2">
+                <span className="rounded-md bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-700">
+                  Firmware & Hardware
+                </span>
               </div>
-            );
-          })}
+              <h3 className="mt-3 font-display text-[22px] font-bold text-ink">
+                Embedded Systems
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Develop practical skills in Embedded C, ARM Cortex-M microcontrollers, RTOS, embedded Linux, and hardware communication protocols.
+              </p>
+              <div className="mt-6 pt-4 border-t border-line">
+                <Link
+                  to="/courses?domain=embedded"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                >
+                  Explore Embedded Programs <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Edge AI */}
+          <div className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-xs transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+            <div className="aspect-[16/10] w-full overflow-hidden bg-ink">
+              <img
+                src="/assets/courses/edge-ai/edge-101.webp"
+                alt="Edge AI - Neural Networks & Computer Vision"
+                className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <div className="flex items-center gap-2">
+                <span className="rounded-md bg-purple-500/10 px-2.5 py-0.5 text-xs font-semibold text-purple-700">
+                  AI & Embedded Intelligence
+                </span>
+              </div>
+              <h3 className="mt-3 font-display text-[22px] font-bold text-ink">
+                Edge AI
+              </h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                Explore machine learning, deep learning, TinyML, model optimization, and computer vision for intelligent edge devices.
+              </p>
+              <div className="mt-6 pt-4 border-t border-line">
+                <Link
+                  to="/courses?domain=edge"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-purple-700 hover:text-purple-800 transition-colors"
+                >
+                  Explore Edge AI Programs <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="mt-5 text-[15px] text-muted">
-          Building your own set? Any 2 courses are 10% off, any 3 are 15% off, any 4–5 are 20% off. <Link to="/programs#build" className="font-semibold text-blue hover:underline">Try the calculator</Link>
-        </p>
       </Section>
 
-      <Section>
-        <SectionHead title="How a course runs" />
-        <ol className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, i) => (
-            <li key={s.title} className="border-t-2 border-ink pt-5">
-              <span className="font-display text-[15px] font-bold text-blue">Step {i + 1}</span>
-              <h3 className="mt-2 text-[19px] font-bold">{s.title}</h3>
-              <p className="mt-2 text-[15px] text-muted">{s.body}</p>
-            </li>
+      {/* 4. Why Choose QBee Online? (About section) */}
+      <section id="about" className="scroll-mt-20">
+        <Section tone="mist">
+          <SectionHead
+            title="Why Choose QBee Online?"
+            intro="Designed by practicing engineers to bridge the gap between academic theory and real semiconductor and embedded systems industry expectations."
+          />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {INCLUDED.map(({ icon: Icon, title, body }) => (
+            <div
+              key={title}
+              className="flex flex-col rounded-xl border border-line bg-white p-6 shadow-xs"
+            >
+              <div className="grid h-12 w-12 place-items-center rounded-lg bg-blue/10 text-blue">
+                <Icon className="h-6 w-6" aria-hidden />
+              </div>
+              <h3 className="mt-4 font-sans text-[17px] font-semibold text-ink">
+                {title}
+              </h3>
+              <p className="mt-2 text-[14.5px] leading-relaxed text-muted">
+                {body}
+              </p>
+            </div>
           ))}
-        </ol>
-      </Section>
+        </div>
 
-      <Section tone="ink">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h2 className="text-[30px] font-bold text-white sm:text-[38px]">Built for placement, by design</h2>
-            <p className="mt-4 text-[17px] text-white/75">
-              Every course produces a project you can show in an interview. Learning paths map to real job roles. Internships turn coursework into work experience, and career support is built in.
-            </p>
-            <p className="mt-6 border-l-2 border-honey pl-4 text-[15px] text-white/70">{OUTCOMES_NOTE}</p>
-            <ButtonLink to="/placements" variant="light" className="mt-8">How we prepare you for hiring</ButtonLink>
+        {/* Learning Workflow Steps */}
+        <div className="mt-14 rounded-2xl border border-line bg-white p-8 lg:p-10">
+          <div className="max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-wider text-blue">
+              How Our Programs Work
+            </span>
+            <h3 className="mt-1 font-display text-[24px] font-bold text-ink sm:text-[28px]">
+              A Rigorous, Structured Learning Progression
+            </h3>
           </div>
-          <div className="overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/10">
-            <table className="w-full text-left text-[15px]">
-              <thead>
-                <tr className="text-sm text-white/60">
-                  <th className="px-5 py-3 font-medium">Course or track</th>
-                  <th className="px-5 py-3 font-medium">Prepares you for</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10">
-                {[
-                  ['VLSI-101 (+ 102)', 'RTL Design, Design Verification'],
-                  ['VLSI-103 + 104', 'Physical Design, STA / Timing'],
-                  ['VLSI-105', 'FPGA Design / Prototyping'],
-                  ['EMB-101 → 102 → 103', 'Embedded Firmware / Software'],
-                  ['EMB-105', 'Embedded Linux / BSP / Driver'],
-                  ['EDGE-102 → 103 → 104', 'Edge AI / TinyML / ML'],
-                  ['EDGE-106', 'Edge Computer Vision'],
-                ].map(([a, b]) => (
-                  <tr key={a}>
-                    <td className="px-5 py-3 font-mono text-[13px] font-semibold text-honey">{a}</td>
-                    <td className="px-5 py-3 text-white/90">{b}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ol className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="relative border-t-2 border-ink pt-5">
+                <span className="font-display text-[15px] font-bold text-blue">
+                  Step {i + 1}
+                </span>
+                <h4 className="mt-2 text-[18px] font-bold text-ink">{s.title}</h4>
+                <p className="mt-2 text-[14px] leading-relaxed text-muted">
+                  {s.body}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </Section>
+    </section>
 
+    {/* Student Testimonials or Success Stories */}
       <Section>
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div>
-            <div className="flex items-center gap-2 text-blue">
-              <Cpu className="h-5 w-5" aria-hidden />
-              <span className="text-sm font-semibold">Course + board packages</span>
+        <SectionHead
+          title="Student Success Stories"
+          intro="Hear from engineering graduates and working professionals who built practical competence and advanced their careers with QBee Online."
+        />
+        <div className="grid gap-8 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <div
+              key={t.name}
+              className="flex flex-col justify-between rounded-2xl border border-line bg-white p-7 shadow-xs"
+            >
+              <div>
+                <Quote className="h-7 w-7 text-honey" />
+                <p className="mt-4 text-[15px] leading-relaxed text-text">
+                  “{t.quote}”
+                </p>
+              </div>
+              <div className="mt-6 border-t border-line pt-4">
+                <p className="font-display font-bold text-ink">{t.name}</p>
+                <p className="text-xs font-medium text-muted">{t.role}</p>
+                <span className="mt-1 inline-block text-[11px] font-semibold text-blue">
+                  {t.domain}
+                </span>
+              </div>
             </div>
-            <h2 className="mt-3 text-[28px] font-bold sm:text-[32px]">Bring a design up on real hardware</h2>
-            <p className="mt-3 text-[17px] text-muted">
-              Candidates who have made a real board work stand out against those who have only simulated. Boards are tested and set up for the course labs before dispatch, and they're yours to keep.
-            </p>
-            <ul className="mt-6 divide-y divide-line border-y border-line">
-              {KITS.filter((k) => ['fpga-essentials', 'mcu-starter', 'tinyml-kit', 'accelerator-kit'].includes(k.id)).map((k) => (
-                <li key={k.id} className="flex items-center justify-between gap-4 py-3">
-                  <span>
-                    <span className="block font-semibold text-ink">{k.name}</span>
-                    <span className="block text-sm text-muted">{k.board}</span>
-                  </span>
-                  <span className="font-display text-[17px] font-bold text-ink">{inr(k.price)}</span>
-                </li>
-              ))}
-            </ul>
-            <ButtonLink to="/kits" variant="outline" className="mt-6">See all 12 packages</ButtonLink>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 text-blue">
-              <Hammer className="h-5 w-5" aria-hidden />
-              <span className="text-sm font-semibold">Apply directly — no full course needed</span>
-            </div>
-            <h2 className="mt-3 text-[28px] font-bold sm:text-[32px]">Build it, extend it, publish it</h2>
-            <p className="mt-3 text-[17px] text-muted">Open to students from any college. Take a guided project, an internship, or paper-writing support on its own or alongside a course.</p>
-            <ul className="mt-6 divide-y divide-line border-y border-line">
-              {SERVICES.map((s) => (
-                <li key={s.id} className="flex items-center justify-between gap-4 py-3">
-                  <span className="font-semibold text-ink">{s.name}</span>
-                  <span className="font-display text-[17px] font-bold text-ink">{inr(s.price)}</span>
-                </li>
-              ))}
-            </ul>
-            <ButtonLink to="/internships" variant="outline" className="mt-6">Projects and internships</ButtonLink>
-          </div>
+          ))}
         </div>
       </Section>
 
+      {/* Questions section */}
       <Section tone="mist">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
-          <div>
-            <h2 className="text-[28px] font-bold sm:text-[32px]">Who we work with</h2>
-            <ul className="mt-6 space-y-4">
-              {AUDIENCES.map((a) => (
-                <li key={a.title}>
-                  <h3 className="font-sans text-[16px] font-semibold text-ink">{a.title}</h3>
-                  <p className="text-[15px] text-muted">{a.body}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <div className="flex items-center gap-2 text-blue">
-              <CalendarClock className="h-5 w-5" aria-hidden />
-              <span className="text-sm font-semibold">Batch formats</span>
-            </div>
-            <h2 className="mt-3 text-[28px] font-bold sm:text-[32px]">Fits around college or work</h2>
-            <div className="mt-6 overflow-hidden rounded-xl border border-line bg-white">
-              {BATCH_FORMATS.map((b) => (
-                <div key={b.name} className="grid gap-1 border-b border-line px-5 py-4 last:border-0 sm:grid-cols-[180px_1fr]">
-                  <span className="font-semibold text-ink">{b.name}</span>
-                  <span className="text-[15px] text-muted">
-                    {b.timing}. <span className="text-text">Best for {b.bestFor.toLowerCase()}.</span>
-                  </span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-3 text-sm text-muted">Upcoming batch start dates are shared on enrolment.</p>
-          </div>
-        </div>
-      </Section>
-
-      <Section>
-        <SectionHead title="Questions students ask" />
+        <SectionHead title="Questions Students Ask" />
         <Faq />
       </Section>
 
-      <section className="bg-honey">
-        <Container className="flex flex-col items-start gap-6 py-12 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-[26px] font-bold sm:text-[30px]">Not sure where to start?</h2>
-            <p className="mt-2 text-[17px] text-ink/80">Tell an advisor your background and target role. We'll suggest a path and a batch.</p>
+      {/* 8. Final Student Enquiry / Counselling CTA */}
+      <section className="bg-honey text-ink">
+        <Container className="flex flex-col items-start gap-6 py-14 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <h2 className="font-display text-[28px] font-extrabold sm:text-[34px] leading-tight">
+              Ready to Build Your Engineering Career?
+            </h2>
+            <p className="mt-2 text-[17px] text-ink/85">
+              Speak with a technical advisor to review your background, choose the best learning path, and get upcoming batch schedules.
+            </p>
           </div>
-          <ButtonLink to="/contact" variant="dark" size="lg">Talk to an advisor</ButtonLink>
+          <div className="flex flex-wrap items-center gap-3">
+            <ButtonLink to="/contact" variant="dark" size="lg" className="font-semibold shadow-xs">
+              Talk to an Advisor
+            </ButtonLink>
+            <ButtonLink
+              to="/courses"
+              variant="outline"
+              size="lg"
+              className="border-ink/30 bg-transparent text-ink hover:bg-ink/10 font-semibold"
+            >
+              Explore All Courses
+            </ButtonLink>
+          </div>
         </Container>
       </section>
     </>
